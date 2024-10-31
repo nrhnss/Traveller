@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Outfits Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image:url('image/outfits.avif') ;
+            background-size:cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+        }
+
+        /*header*/
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: #0c2313;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 16px;
+            padding: 8px 16px; /* Add padding for consistency */
+            transition: background 0.3s; /* Smooth background transition */
+        }
+
+        .navbar a:hover {
+            background-color: #1a3d27; /* Darker background on hover */
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* Dropdown Button */
+        .dropdownheader {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropbtn {
+            background-color: transparent; /* Make background transparent */
+            color: white;
+            border: none; /* Remove border */
+            padding: 8px 16px; /* Add padding for consistency */
+            font-size: 16px;
+            cursor: pointer; /* Change cursor on hover */
+            transition: background 0.3s; /* Smooth background transition */
+        }
+
+        .dropbtn:hover {
+            background-color: #1a3d27; /* Darker background on hover */
+        }
+
+        .dropdownheader-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdownheader-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdownheader-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdownheader:hover .dropdownheader-content {
+            display: block;
+        }
+
+        /*content*/
+        .content {
+            padding: 20px;
+        }
+
+        h1{
+            color: #fffff7;
+        }
+
+        .dropdown {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fdfeee;
+            opacity: 95%;
+        }
+
+        .dropdown-title {
+            padding: 15px;
+            font-size: 18px;
+            display: flex;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+
+        .dropdown-content {
+            display: none; /* Keep content hidden initially */
+            padding: 15px;
+            border-top: 1px solid #ccc;
+        }
+
+        .dropdown-content img {
+            width: 200px;
+            height: 270px;
+            margin-right: 10px;
+            border-radius: 5px;
+        }
+
+        .image-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+        }
+
+        .footer {
+            background-color: #0c2313;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 8.5%;
+        }
+
+        .footer p {
+            font-size: 14px;
+            color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <!--header-->
+    <div class="navbar">
+        <div class="logo">TRAVCITY</div>
+        <div>
+            <a href="index.html">Home</a>
+            <div class="dropdownheader">
+                <button class="dropbtn">Country</button>
+                <div class="dropdownheader-content">
+                    <a href="korea.html">Korea</a>
+                    <a href="netherlands.html">Netherlands</a>
+                    <a href="italy.html">Italy</a>
+                    <a href="france.html">France</a>
+                    <a href="brazil.html">Brazil</a>
+                    <a href="china.html">China</a>
+                </div>
+            </div>
+            <a href="outfits.html">Outfits</a>
+            <a href="itineraries.html">Itineraries</a>
+        </div>
+    </div>
+    <div class="content">
+        <center><h1>WEATHER OUTFITS </h1></center>
+        <!-- Dropdown for Sunny -->
+        <div class="dropdown">
+            <div class="dropdown-title" onclick="toggleDropdown('sunny')">Sunny ▼</div>
+            <div class="dropdown-content" id="sunny">
+                <div class="image-container">
+                    <img src="image/sunny1.jpg" alt="Sunny Outfit 1">
+                    <img src="image/sunny2.jpg" alt="Sunny Outfit 2">
+                    <img src="image/sunny3.jpg" alt="Sunny Outfit 3">
+                    <img src="image/sunny4.jpg" alt="Sunny Outfit 4">
+                </div>
+            </div>
+        </div>
+        <!-- Dropdown for Rainy -->
+        <div class="dropdown">
+            <div class="dropdown-title" onclick="toggleDropdown('rainy')">Rainy ▼</div>
+            <div class="dropdown-content" id="rainy">
+                <div class="image-container">
+                    <img src="image/rainy1.jpg" alt="Rainy Outfit 1">
+                    <img src="image/rainy2.jpg" alt="Rainy Outfit 2">
+                    <img src="image/rainy3.jpg" alt="Rainy Outfit 3">
+                    <img src="image/rainy4.jpg" alt="Rainy Outfit 4">
+                </div>
+            </div>
+        </div>
+
+        <!-- Dropdown for Cloudy -->
+        <div class="dropdown">
+            <div class="dropdown-title" onclick="toggleDropdown('cloudy')">Cloudy ▼</div>
+            <div class="dropdown-content" id="cloudy">
+                <div class="image-container">
+                    <img src="image/cloudy1.jpg" alt="Cloudy Outfit 1">
+                    <img src="image/cloudy2.jpg" alt="Cloudy Outfit 2">
+                    <img src="image/cloudy3.jpg" alt="Cloudy Outfit 3">
+                    <img src="image/cloudy4.jpg" alt="Cloudy Outfit 4">
+                </div>
+            </div>
+        </div>
+
+        <!-- Dropdown for Overcast -->
+        <div class="dropdown">
+            <div class="dropdown-title" onclick="toggleDropdown('overcast')">Overcast ▼</div>
+            <div class="dropdown-content" id="overcast">
+                <div class="image-container">
+                    <img src="image/overcast1.jpg" alt="Overcast Outfit 1">
+                    <img src="image/overcast2.jpg" alt="Overcast Outfit 2">
+                    <img src="image/overcast3.jpg" alt="Overcast Outfit 3">
+                    <img src="image/overcast4.jpg" alt="Overcast Outfit 4">
+                </div>
+            </div>
+        </div>
+
+        <!-- Dropdown for Winter -->
+        <div class="dropdown">
+            <div class="dropdown-title" onclick="toggleDropdown('winter')">Winter ▼</div>
+            <div class="dropdown-content" id="winter">
+                <div class="image-container">
+                    <img src="image/snow1.jpg" alt="Winter Outfit 1">
+                    <img src="image/snow2.jpg" alt="Winter Outfit 2">
+                    <img src="image/snow3.jpg" alt="Winter Outfit 3">
+                    <img src="image/snow4.jpg" alt="Winter Outfit 4">
+                </div>
+            </div>
+        </div>
+
+        <!--Dropdown for Windy-->
+        <div class="dropdown">
+            <div class="dropdown-title" onclick="toggleDropdown('windy')">Windy ▼</div>
+            <div class="dropdown-content" id="windy">
+                <div class="image-container">
+                    <img src="image/windy1.jpg" alt="Winter Outfit 1">
+                    <img src="image/windy2.jpg" alt="Winter Outfit 2">
+                    <img src="image/windy3.jpg" alt="Winter Outfit 3">
+                    <img src="image/windy4.jpg" alt="Winter Outfit 4">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2024 Travcity. All rights reserved.</p>
+    </div>
+
+    <script>
+        function toggleDropdown(id) {
+            const content = document.getElementById(id);
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Italy Travel & Weather</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            font-family: Arial, sans-serif;
+            background-color: #faf7dc;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            background: url('image/italy1.webp') no-repeat center center;
+            background-size: cover;
+            color: white;
+            width: 100%;
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: bold;
+            position: relative;
+            padding-top: 50px; /* Adjusted for header content */
+        }
+
+        /* Side Panel */
+        .sidepanel {
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-color: #000000;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 70px;
+        }
+        
+        .sidepanel a {
+            padding: 20px 30px 20px 50px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+            font-family: "Lato", sans-serif;
+        }
+
+        .sidepanel a:hover {
+            color: #f1f1f1;
+        }
+
+        .sidepanel .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            color: #818181;
+        }
+
+        .openbtn {
+            font-size: 20px;
+            cursor: pointer;
+            background-color: #000000;
+            opacity: 50%;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
+        }
+        
+        .openbtn:hover {
+            background-color: #444;
+        }
+
+        /* Dropdown Styles */
+        .dropdown {
+            display: none;
+            background-color: #111;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .dropdown a {
+            padding: 10px 30px;
+            color: #818181;
+        }
+
+        .dropdown a:hover {
+            color: #f1f1f1;
+        }
+
+        .dropdown-btn {
+            cursor: pointer;
+            display: block;
+            padding: 20px 30px 20px 50px;
+            color: #818181;
+            background: none;
+            border: none;
+            text-align: left;
+            font-size: 18px;
+        }
+
+        /* Weather and time info inside header */
+        .info-panel {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin: 20px 0;
+            margin-top: 10%;
+            color: #f6ffd0;
+            font-size: 18px;
+        }
+
+        .info-panel .left, .info-panel .right {
+            flex: 1;
+            text-align: center;
+        }
+
+        /* Main container */
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            width: 90%;
+            max-width: 1000px;
+            box-sizing: border-box;
+            margin: auto;
+        }
+
+        .loc{
+            font-size: 26px;
+            padding: 10px;
+            
+        }
+
+        /* Weather details boxes */
+        .weather-boxes {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            width: 80%;
+            margin: 20px 0;
+            margin-left: 10%;
+        }
+
+        .weather-box {
+            background-color: #ede2bc;
+            padding: 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            color: #0c2313;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .titleplace {
+            font-size: 35px;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+
+        /* Interesting places section */
+        .places {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .place-card {
+            background-color: white;
+            border-radius: 8px;
+            width: 65%;
+            margin: 10px;
+            padding: 15px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+            text-align: center;
+        }
+
+        .place-card:hover {
+            transform: scale(1.05);
+        }
+
+        .place-card img {
+            width: 100%;
+            height: 250px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .place-card h3 {
+            font-size: 20px;
+            color: #0c2313;
+            margin: 10px 0;
+        }
+
+        .place-card p {
+            font-size: 15px;
+        }
+
+        /* Outfit button */
+        .outfit-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 18px;
+            color: white;
+            background-color: #333;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .outfit-button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Side Panel -->
+    <div id="mySidepanel" class="sidepanel">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+        <button class="dropdown-btn" onclick="toggleDropdown()">Country</button>
+        <div id="dropdown" class="dropdown">
+            <a href="china.html">China</a>
+            <a href="france.html">France</a>
+            <a href="netherlands.html">Netherlands</a>
+            <a href="korea.html">Korea</a>
+            <a href="brazil.html">Brazil</a>
+        </div>
+        <a href="outfits.html">Outfits</a>
+        <a href="itineraries.html">Itineraries</a>
+        <a href="index.html">Homepage</a>
+    </div>
+
+    <!-- Header with background image and title -->
+    <div class="header">
+        <br>
+        ITALY
+        <div class="info-panel">
+            <div class="left">
+                Local Time: <span id="local-time">Loading...</span>
+            </div>
+            <div class="right">
+                Temperature: <span id="temperature">Loading...</span>
+                Weather: <span id="weather">Loading...</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Open Side Panel Button -->
+    <button class="openbtn" onclick="openNav()">☰</button>
+
+    <!-- Main Container -->
+    <div class="container">
+        <div class="loc">Take me to: <span id="location">Loading...</span>
+        <!-- Weather Boxes -->
+        <div class="weather-boxes">
+            <div class="weather-box" id="box1">Feels Like: <span id="feels-like">Loading...</span><br> Forecast Temp: <span id="forecast-temp">Loading...</span></div>
+            <div class="weather-box" id="box2">Wind Speed: <span id="wind-speed">Loading...</span><br> Humidity: <span id="humidity">Loading...</span></div>
+            <div class="weather-box" id="box3">Sunrise: <span id="sunrise">Loading...</span><br> Sunset: <span id="sunset">Loading...</span></div>
+            <div class="weather-box" id="box4">Description: <span id="description">Loading...</span><br> Region: <span id="region">Loading...</span></div>
+        </div>
+
+        <div class="titleplace">
+            <h3>Interesting Places</h3>
+        </div>
+
+        <!-- Interesting Places Section -->
+        <div class="places">
+            <div class="place-card">
+                <img src="image/colosseum.jpg" alt="Place 1">
+                <h3>Colosseum</h3>
+                <p>The Colosseum, also known as the Flavian Amphitheatre, is an iconic symbol of ancient Rome and a remarkable architectural feat, completed in AD 80. 
+                    This elliptical structure, measuring approximately 189 meters long and 156 meters wide, could hold between 50,000 to 80,000 spectators and stands about 48 meters tall. 
+                    Built from concrete and sand, its exterior features three levels of arches adorned with Doric, Ionic, and Corinthian columns, while the interior includes a complex system of corridors and passageways, with the hypogeum beneath the arena used for staging events. 
+                    Hosting a variety of spectacles, including gladiatorial contests and animal hunts, the Colosseum serves as a UNESCO World Heritage Site and remains one of the most visited monuments globally, symbolizing the grandeur of the Roman Empire and its cultural legacy.</p>
+            </div>
+            <div class="place-card">
+                <img src="image/sangimignano.jpg" alt="Place 2">
+                <h3>San Gimignano</h3>
+                <p>San Gimignano is a charming medieval hilltown located in Tuscany, Italy, renowned for its well-preserved architecture and stunning skyline of medieval towers. 
+                    Often referred to as the "Manhattan of the Middle Ages," the town is famous for its 14 towering structures, which were built by wealthy families during the 12th and 13th centuries as a display of power and prestige. 
+                    The town's historic center, a UNESCO World Heritage Site, features narrow cobblestone streets, quaint shops, and vibrant piazzas, with the Piazza della Cisterna and Piazza del Duomo at its heart. 
+                    Visitors can explore notable landmarks, including the Collegiata di Santa Maria Assunta, which houses impressive frescoes, and the Palazzo del Popolo, showcasing beautiful views from its tower. 
+                    San Gimignano is also celebrated for its local wines, particularly the Vernaccia di San Gimignano, making it a delightful destination for both history enthusiasts and food lovers.</p>
+            </div>
+            <div class="place-card">
+                <img src="image/praiano.jpg" alt="Place 3">
+                <h3>Praiano</h3>
+                <p>Praiano is a picturesque coastal village situated along the stunning Amalfi Coast in Italy, renowned for its breathtaking views, charming streets, and tranquil atmosphere. 
+                    Perched on a cliff, the town offers stunning vistas of the Mediterranean Sea and is characterized by its colorful houses, narrow winding paths, and vibrant bougainvillea. 
+                    Praiano is less touristy compared to its neighboring towns, such as Positano and Amalfi, making it a perfect destination for those seeking a more relaxed experience. 
+                    Visitors can explore beautiful beaches, such as Marina di Praia and Gavitella Beach, and enjoy local cuisine in cozy trattorias. 
+                    The village is also home to several historic churches, including the Church of San Gennaro, which features a beautiful majolica-tiled dome. 
+                    With its enchanting scenery, authentic Italian charm, and a more laid-back vibe, Praiano is a hidden gem that captures the essence of the Amalfi Coast.</p>
+            </div>
+            <div class="place-card">
+                <img src="image/dorsodure.jpg" alt="Place 4">
+                <h3>Dorsodure, Venice</h3>
+                <p>Dorsoduro is a vibrant and picturesque district in Venice, Italy, known for its artistic heritage, charming canals, and stunning architecture. 
+                    Located on the southern bank of the Grand Canal, Dorsoduro is home to some of the city's most important cultural institutions, including the Peggy Guggenheim Collection, 
+                    which houses an impressive collection of modern art, and the Gallerie dell'Accademia, showcasing masterpieces from the Venetian Renaissance. 
+                    The area features a mix of narrow streets, quaint squares, and picturesque waterfronts, with the iconic Basilica di Santa Maria della Salute standing majestically at the entrance to the Grand Canal. 
+                    Dorsoduro is also known for its vibrant local life, with bustling markets, artisanal shops, and charming cafes where visitors can enjoy traditional Venetian cuisine. 
+                    The district's artistic ambiance and scenic views make it a must-visit destination for those exploring the enchanting city of Venice.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!--Outfits recommendation-->
+    <br>
+    <div class="outfit-recommendations">
+        <h2>Outfit Recommendations</h2>
+        <div class="outfit-images">
+            <img id="outfit-image1" src="" alt="Outfit example 1" style="width: 200px; height: 270px; border-radius: 8px; margin: 10px;">
+            <img id="outfit-image2" src="" alt="Outfit example 2" style="width: 200px; height: 270px; border-radius: 8px; margin: 10px;">
+            <img id="outfit-image3" src="" alt="Outfit example 3" style="width: 200px; height: 270px; border-radius: 8px; margin: 10px;">
+        </div>
+        <p id="outfit-suggestion">Loading outfit suggestions...</p>
+    </div>
+
+    <!--Script-->
+    <script>
+        // Function to open the side panel
+        function openNav() {
+            document.getElementById("mySidepanel").style.width = "250px";
+        }
+
+        // Function to close the side panel
+        function closeNav() {
+            document.getElementById("mySidepanel").style.width = "0";
+        }
+
+        // Function to toggle dropdown menu
+        function toggleDropdown() {
+            var dropdown = document.getElementById("dropdown");
+            if (dropdown.style.display === "block") {
+                dropdown.style.display = "none";
+            } else {
+                dropdown.style.display = "block";
+            }
+        }
+
+        // Function to fetch weather data and update HTML
+        document.addEventListener("DOMContentLoaded", () => {
+            fetch("https://api.weatherapi.com/v1/forecast.json?key=32804b24a847407391c53709241010&q=Rome&days=1")
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("local-time").textContent = data.location.localtime;
+                    document.getElementById("temperature").textContent = data.current.temp_c + "°C";
+                    document.getElementById("weather").textContent = data.current.condition.text;
+                    document.getElementById("feels-like").textContent = data.current.feelslike_c + "°C";
+                    document.getElementById("forecast-temp").textContent = data.forecast.forecastday[0].day.avgtemp_c + "°C";
+                    document.getElementById("wind-speed").textContent = data.current.wind_kph + " kph";
+                    document.getElementById("humidity").textContent = data.current.humidity + "%";
+                    document.getElementById("sunrise").textContent = data.forecast.forecastday[0].astro.sunrise;
+                    document.getElementById("sunset").textContent = data.forecast.forecastday[0].astro.sunset;
+                    document.getElementById("description").textContent = data.current.condition.text;
+                    document.getElementById("location").textContent = data.location.name;
+                    document.getElementById("region").textContent = data.location.region;
+
+                    // Determine outfit suggestion based on weather condition
+                    displayOutfitSuggestion(data.current.condition.text);
+                })
+                .catch(error => console.error("Error fetching weather data:", error));
+        });
+
+
+        //outfits recomendations
+        function displayOutfitSuggestion(condition) {
+    let suggestion;
+    let imageUrls;
+
+    switch (condition.toLowerCase()) {
+        case "sunny":
+        case "clear":
+        case "light drizzle":
+            suggestion = "It's sunny! Wear light, breathable fabrics like cotton, sunglasses, and a hat.";
+            imageUrls = [
+                "image/sunny1.jpg",
+                "image/sunny2.jpg",
+                "image/sunny4.jpg"
+            ];
+            break;
+        case "overcast":
+        case "mist":
+            suggestion = "It's overcast. Consider a light jacket or cardigan and comfortable clothing.";
+            imageUrls = [
+                "image/overcast2.jpg",
+                "image/overcast3.jpg",
+                "image/overcast1.jpg"
+            ];
+            break;
+        case "rain":
+        case "light rain":
+        case "light rain shower":
+        case "patch rain nearby":
+        case "rainy":
+        case "showers":
+            suggestion = "Expect rain. Wear waterproof outerwear and bring an umbrella.";
+            imageUrls = [
+                "image/rainy1.jpg",
+                "image/rainy2.jpg",
+                "image/rainy3.jpg"
+            ];
+            break;
+        case "snow":
+            suggestion = "Snowy weather! Bundle up with a warm coat, scarf, and gloves.";
+            imageUrls = [
+                "image/snow4.jpg",
+                "image/snow3.jpg",
+                "image/snow1.jpg"
+            ];
+            break;
+        case "cloudy":
+        case "partly cloudy":
+            suggestion = "It's cloudy. A light sweater or hoodie should keep you comfortable.";
+            imageUrls = [
+                "image/cloudy1.jpg",
+                "image/cloudy2.jpg",
+                "image/cloudy3.jpg"
+            ];
+            break;
+        case "windy":
+            suggestion = "Windy conditions today. A windbreaker or jacket is recommended.";
+            imageUrls = [
+                "image/windy1.jpg",
+                "image/windy2.jpg",
+                "image/windy4.jpg"
+            ];
+            break;
+        default:
+            suggestion = "Dress comfortably and check for unexpected weather changes!";
+            imageUrls = [
+                "image/default1.jpg",
+                "image/default2.jpg",
+                "image/default3.jpg"
+            ];
+            break;
+    }
+
+    document.getElementById("outfit-suggestion").textContent = suggestion;
+    document.getElementById("outfit-image1").src = imageUrls[0];
+    document.getElementById("outfit-image2").src = imageUrls[1];
+    document.getElementById("outfit-image3").src = imageUrls[2];
+}
+    </script>
+    
+</body>
+</html>

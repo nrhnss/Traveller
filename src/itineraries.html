@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Insider - Itineraries</title>
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+            background-color: #f4f4f4;
+            background-image:url('image/itineraries4.jpeg') ;
+            background-size:cover;            
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+        }
+
+        /* Navbar and Footer from Existing Layout */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: #0c2313;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 16px;
+            padding: 8px 16px; /* Add padding for consistency */
+            transition: background 0.3s; /* Smooth background transition */
+        }
+
+        .navbar a:hover {
+            background-color: #1a3d27; /* Darker background on hover */
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* Dropdown Button */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropbtn {
+            background-color: transparent; /* Make background transparent */
+            color: white;
+            border: none; /* Remove border */
+            padding: 8px 16px; /* Add padding for consistency */
+            font-size: 16px;
+            cursor: pointer; /* Change cursor on hover */
+            transition: background 0.3s; /* Smooth background transition */
+        }
+
+        .dropbtn:hover {
+            background-color: #1a3d27; /* Darker background on hover */
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /*footer*/
+        .footer {
+            background-color: #0c2313;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 8.5%;
+        }
+
+        .footer p {
+            font-size: 14px;
+            color: #ddd;
+        }
+
+        /* Main Content Layout */
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            display: flex;
+            gap: 20px;
+        }
+
+        /* Itinerary Input Section */
+        .input-section {
+            flex: 2;
+            background-color: #f9f9f9;
+            opacity: 90%;
+            padding: 20px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .input-section h2 {
+            color: #333;
+        }
+
+        .title-input {
+            background-color: #d3d3d3;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .planner-input {
+            background-color: #e0f7df;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .btn {
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            color: white;
+            font-size: 16px;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .btn.update {
+            background-color: #4caf50;
+        }
+
+        .btn.delete {
+            background-color: #f44336;
+        }
+
+        /* Title List Section */
+        .title-list {
+            flex: 1;
+            background-color: #ffe4b5;
+            opacity: 90%;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-y: auto;
+            max-height: 400px;
+        }
+
+        .title-list h2 {
+            color: #333;
+        }
+
+        .title-item {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            cursor: pointer;
+        }
+
+        .title-item:hover {
+            background-color: #ffdab9;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo">TRAVCITY</div>
+        <div>
+            <a href="index.html">Home</a>
+            <div class="dropdown">
+                <button class="dropbtn">Country</button>
+                <div class="dropdown-content">
+                    <a href="korea.html">Korea</a>
+                    <a href="netherlands.html">Netherlands</a>
+                    <a href="italy.html">Italy</a>
+                    <a href="france.html">France</a>
+                    <a href="brazil.html">Brazil</a>
+                    <a href="china.html">China</a>
+                </div>
+            </div>
+            <a href="outfits.html">Outfits</a>
+            <a href="itineraries.html">Itineraries</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Input Section -->
+        <div class="input-section">
+            <h2>Create Your Own Plan</h2>
+            <input type="text" id="titleInput" class="title-input" placeholder="Enter itinerary title" />
+            <textarea id="plannerInput" class="planner-input" placeholder="Enter travel plan details here..."></textarea>
+            <div class="btn-group">
+                <button class="btn update" onclick="updateItinerary()">Add/Update</button>
+                <button class="btn delete" onclick="deleteItinerary()">Delete</button>
+            </div>
+        </div>
+
+        <!-- Title List Section -->
+        <div class="title-list" id="titleList">
+            <h2>Planner</h2>
+            <!-- Dynamic list of itinerary titles will go here -->
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2024 Travcity. All rights reserved.</p>
+    </div>
+
+    <!--script-->
+    <script>
+        let itineraries = JSON.parse(localStorage.getItem("itineraries")) || [];
+        let selectedItineraryIndex = -1;
+
+        function updateItinerary() {
+            const title = document.getElementById("titleInput").value;
+            const planner = document.getElementById("plannerInput").value;
+
+            if (selectedItineraryIndex === -1) {
+                // Add new itinerary
+                itineraries.push({ title, planner });
+            } else {
+                // Update existing itinerary
+                itineraries[selectedItineraryIndex] = { title, planner };
+                selectedItineraryIndex = -1;
+            }
+
+            saveItineraries();
+            clearInputs();
+            renderTitleList();
+        }
+
+        function deleteItinerary() {
+            if (selectedItineraryIndex !== -1) {
+                itineraries.splice(selectedItineraryIndex, 1);
+                selectedItineraryIndex = -1;
+                saveItineraries();
+                clearInputs();
+                renderTitleList();
+            }
+        }
+
+        function renderTitleList() {
+            const titleList = document.getElementById("titleList");
+            titleList.innerHTML = "<h2>Saved Itineraries</h2>";
+            itineraries.forEach((itinerary, index) => {
+                const titleItem = document.createElement("div");
+                titleItem.className = "title-item";
+                titleItem.innerText = itinerary.title;
+                titleItem.onclick = () => selectItinerary(index);
+                titleList.appendChild(titleItem);
+            });
+        }
+
+        function selectItinerary(index) {
+            selectedItineraryIndex = index;
+            const itinerary = itineraries[index];
+            document.getElementById("titleInput").value = itinerary.title;
+            document.getElementById("plannerInput").value = itinerary.planner;
+        }
+
+        function saveItineraries() {
+            localStorage.setItem("itineraries", JSON.stringify(itineraries));
+        }
+
+        function clearInputs() {
+            document.getElementById("titleInput").value = "";
+            document.getElementById("plannerInput").value = "";
+        }
+
+        // Load itineraries when page loads
+        window.onload = function() {
+            renderTitleList();
+        };
+    </script>
+</body>
+</html>

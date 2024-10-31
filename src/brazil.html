@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brazil Travel & Weather</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            font-family: Arial, sans-serif;
+            background-color: #d7eef9;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            background: url('image/brazil1.jpg') no-repeat center center;
+            background-size: cover;
+            color: white;
+            width: 100%;
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: bold;
+            position: relative;
+            padding-top: 50px; /* Adjusted for header content */
+        }
+
+        /* Side Panel */
+        .sidepanel {
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-color: #000000;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 70px;
+        }
+        
+        .sidepanel a {
+            padding: 20px 30px 20px 50px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+            font-family: "Lato", sans-serif;
+        }
+
+        .sidepanel a:hover {
+            color: #f1f1f1;
+        }
+
+        .sidepanel .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            color: #818181;
+        }
+
+        .openbtn {
+            font-size: 20px;
+            cursor: pointer;
+            background-color: #000000;
+            opacity: 40%;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
+        }
+        
+        .openbtn:hover {
+            background-color: #444;
+        }
+
+        /* Dropdown Styles */
+        .dropdown {
+            display: none;
+            background-color: #111;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .dropdown a {
+            padding: 10px 30px;
+            color: #818181;
+        }
+
+        .dropdown a:hover {
+            color: #f1f1f1;
+        }
+
+        .dropdown-btn {
+            cursor: pointer;
+            display: block;
+            padding: 20px 30px 20px 50px;
+            color: #818181;
+            background: none;
+            border: none;
+            text-align: left;
+            font-size: 18px;
+        }
+
+        /* Weather and time info inside header */
+        .info-panel {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin: 5px 0;
+            margin-top: 10%;
+            color: #ffffff;
+            font-size: 18px;
+            background-color: #004b05;
+        }
+
+        .info-panel .left, .info-panel .right {
+            flex: 1;
+            text-align: center;
+        }
+
+        /* Main container */
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            width: 90%;
+            max-width: 1000px;
+            box-sizing: border-box;
+            margin: auto;
+        }
+
+        .loc{
+            font-size: 26px;
+            padding: 10px;
+            
+        }
+
+        /* Weather details boxes */
+        .weather-boxes {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            width: 80%;
+            margin: 20px 0;
+            margin-left: 10%;
+        }
+
+        .weather-box {
+            background-color: #c7e0fc;
+            padding: 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            color: #0c2313;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .titleplace {
+            font-size: 35px;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+
+        /* Interesting places section */
+        .places {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .place-card {
+            background-color: white;
+            border-radius: 8px;
+            width: 65%;
+            margin: 10px;
+            padding: 15px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+            text-align: center;
+        }
+
+        .place-card:hover {
+            transform: scale(1.05);
+        }
+
+        .place-card img {
+            width: 100%;
+            height: 250px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .place-card h3 {
+            font-size: 20px;
+            color: #0c2313;
+            margin: 10px 0;
+        }
+
+        .place-card p {
+            font-size: 15px;
+        }
+
+        /* Outfit button */
+        .outfit-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 18px;
+            color: white;
+            background-color: #333;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .outfit-button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Side Panel -->
+    <div id="mySidepanel" class="sidepanel">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+        <button class="dropdown-btn" onclick="toggleDropdown()">Country</button>
+        <div id="dropdown" class="dropdown">
+            <a href="china.html">China</a>
+            <a href="france.html">France</a>
+            <a href="netherlands.html">Netherlands</a>
+            <a href="korea.html">Korea</a>
+            <a href="italy.html">Italy</a>
+        </div>
+        <a href="outfits.html">Outfits</a>
+        <a href="itineraries.html">Itineraries</a>
+        <a href="index.html">Homepage</a>
+    </div>
+
+    <!-- Header with background image and title -->
+    <div class="header">
+        <br>
+        BRAZIL
+        <div class="info-panel">
+            <div class="left">
+                Local Time: <span id="local-time">Loading...</span>
+            </div>
+            <div class="right">
+                Temperature: <span id="temperature">Loading...</span>
+                Weather: <span id="weather">Loading...</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Open Side Panel Button -->
+    <button class="openbtn" onclick="openNav()">☰</button>
+
+    <!-- Main Container -->
+    <div class="container">
+        <div class="loc">Take me to: <span id="location">Loading...</span>
+        <!-- Weather Boxes -->
+        <div class="weather-boxes">
+            <div class="weather-box" id="box1">Feels Like: <span id="feels-like">Loading...</span><br> Forecast Temp: <span id="forecast-temp">Loading...</span></div>
+            <div class="weather-box" id="box2">Wind Speed: <span id="wind-speed">Loading...</span><br> Humidity: <span id="humidity">Loading...</span></div>
+            <div class="weather-box" id="box3">Sunrise: <span id="sunrise">Loading...</span><br> Sunset: <span id="sunset">Loading...</span></div>
+            <div class="weather-box" id="box4">Description: <span id="description">Loading...</span><br> Region: <span id="region">Loading...</span></div>
+        </div>
+
+        <div class="titleplace">
+            <h3>Interesting Places</h3>
+        </div>
+
+        <!-- Interesting Places Section -->
+        <div class="places">
+            <div class="place-card">
+                <img src="image/iguazafall.jpg" alt="Place 1">
+                <h3>Iguaza Falls</h3>
+                <p>Iguazu Falls, located on the border of Brazil and Argentina, is one of the largest and most stunning waterfall systems in the world. 
+                    Comprising 275 individual falls, the most famous of which is the Garganta do Diabo (Devil's Throat), 
+                    the falls stretch nearly 1.7 miles (2.7 kilometers) and create a breathtaking display of cascading water surrounded by lush rainforest. 
+                    The area is rich in biodiversity, home to various plant and animal species, making it a UNESCO World Heritage site. 
+                    Visitors can enjoy panoramic views from walking trails and observation platforms, and the powerful sound of the falls combined with 
+                    the mist creates a magical atmosphere, making Iguazu Falls a must-visit destination for nature lovers.</p>
+            </div>
+            <div class="place-card">
+                <img src="image/paraty.jpg" alt="Place 2">
+                <h3>Paraty</h3>
+                <p>Paraty is a charming coastal town in Brazil, renowned for its well-preserved colonial architecture and stunning natural landscapes. 
+                    Nestled between the Atlantic Ocean and the lush Serra da Bocaina mountains, 
+                    Paraty boasts cobblestone streets lined with colorful historic buildings, vibrant shops, and inviting cafés. 
+                    The town is famous for its picturesque beaches, such as Praia do Pontal and Praia do Jabaquara, 
+                    as well as its access to a multitude of nearby islands and hidden coves, perfect for swimming and snorkeling. 
+                    Paraty is also a cultural hub, hosting numerous festivals, art galleries, and workshops that celebrate Brazilian traditions. 
+                    With its rich history, breathtaking scenery, and lively atmosphere, 
+                    Paraty is a captivating destination for visitors seeking both relaxation and adventure.
+                </p>
+            </div>
+            <div class="place-card">
+                <img src="image/riodejaneiro.jpg" alt="Place 3">
+                <h3>Rio de Janeiro</h3>
+                <p>Rio de Janeiro, often simply referred to as Rio, is a vibrant city located on Brazil's southeastern coast, renowned for its stunning landscapes, lively culture, and iconic landmarks. 
+                    Surrounded by mountains and the Atlantic Ocean, Rio is famous for its beautiful beaches, including Copacabana and Ipanema, where sunbathers and surfers alike enjoy the sun and surf. 
+                    The city is home to the iconic Christ the Redeemer statue atop Corcovado Mountain, offering breathtaking views of the surrounding area. 
+                    Rio's lively atmosphere is enhanced by its rich cultural heritage, evident in its music, dance, and festivals, particularly the world-famous Carnival, which features colorful parades and samba dancing. 
+                    With a unique blend of natural beauty, cultural richness, and urban excitement, Rio de Janeiro is a must-visit destination that captures the heart of Brazil.</p>
+            </div>
+            <div class="place-card">
+                <img src="image/refice1.jpg" alt="Place 4">
+                <h3>Recife</h3>
+                <p>Recife is a vibrant city located on Brazil's northeastern coast, known for its rich history, unique architecture, and lively culture. 
+                    Often referred to as the "Venice of Brazil" due to its many waterways and bridges, Recife features a charming mix of colonial buildings, modern skyscrapers, and colorful markets. 
+                    The city is famous for its beautiful beaches, such as Boa Viagem, which attract sunbathers and surfers alike. Recife is also a cultural hub, home to numerous museums, art galleries, 
+                    and theaters that showcase the region's rich artistic traditions, including the popular dance form of Frevo. The city hosts lively festivals, particularly during Carnival, 
+                    when streets come alive with music, dance, and vibrant parades. With its fascinating blend of history, culture, and natural beauty, Recife offers a unique experience for visitors.</p>
+            </div>
+        </div>
+    </div>
+
+    <!--Outfits recommendations-->
+    <br>
+    <div class="outfit-recommendations">
+        <h2>Outfit Recommendations</h2>
+        <div class="outfit-images">
+            <img id="outfit-image1" src="" alt="Outfit example 1" style="width: 200px; height: 270px; border-radius: 8px; margin: 10px;">
+            <img id="outfit-image2" src="" alt="Outfit example 2" style="width: 200px; height: 270px; border-radius: 8px; margin: 10px;">
+            <img id="outfit-image3" src="" alt="Outfit example 3" style="width: 200px; height: 270px; border-radius: 8px; margin: 10px;">
+        </div>
+        <p id="outfit-suggestion">Loading outfit suggestions...</p>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Function to open the side panel
+        function openNav() {
+            document.getElementById("mySidepanel").style.width = "250px";
+        }
+
+        // Function to close the side panel
+        function closeNav() {
+            document.getElementById("mySidepanel").style.width = "0";
+        }
+
+        // Function to toggle dropdown menu
+        function toggleDropdown() {
+            var dropdown = document.getElementById("dropdown");
+            if (dropdown.style.display === "block") {
+                dropdown.style.display = "none";
+            } else {
+                dropdown.style.display = "block";
+            }
+        }
+        // Function to fetch weather data and update HTML
+        document.addEventListener("DOMContentLoaded", () => {
+            fetch("https://api.weatherapi.com/v1/forecast.json?key=32804b24a847407391c53709241010&q=Brazil&days=1")
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("local-time").textContent = data.location.localtime;
+                    document.getElementById("temperature").textContent = data.current.temp_c + "°C";
+                    document.getElementById("weather").textContent = data.current.condition.text;
+                    document.getElementById("feels-like").textContent = data.current.feelslike_c + "°C";
+                    document.getElementById("forecast-temp").textContent = data.forecast.forecastday[0].day.avgtemp_c + "°C";
+                    document.getElementById("wind-speed").textContent = data.current.wind_kph + " kph";
+                    document.getElementById("humidity").textContent = data.current.humidity + "%";
+                    document.getElementById("sunrise").textContent = data.forecast.forecastday[0].astro.sunrise;
+                    document.getElementById("sunset").textContent = data.forecast.forecastday[0].astro.sunset;
+                    document.getElementById("description").textContent = data.current.condition.text;
+                    document.getElementById("location").textContent = data.location.name;
+                    document.getElementById("region").textContent = data.location.region;
+
+                    // Determine outfit suggestion based on weather condition
+                    displayOutfitSuggestion(data.current.condition.text);
+                })
+                .catch(error => console.error("Error fetching weather data:", error));
+        });
+
+
+        //outfits recomendations
+        function displayOutfitSuggestion(condition) {
+    let suggestion;
+    let imageUrls;
+
+    switch (condition.toLowerCase()) {
+        case "sunny":
+        case "clear":
+        case "light drizzle":
+            suggestion = "It's sunny! Wear light, breathable fabrics like cotton, sunglasses, and a hat.";
+            imageUrls = [
+                "image/sunny1.jpg",
+                "image/sunny2.jpg",
+                "image/sunny3.jpg"
+            ];
+            break;
+        case "overcast":
+        case "mist":
+            suggestion = "It's overcast. Consider a light jacket or cardigan and comfortable clothing.";
+            imageUrls = [
+                "image/overcast1.jpg",
+                "image/overcast2.jpg",
+                "image/overcast3.jpg"
+            ];
+            break;
+        case "rain":
+        case "light rain":
+        case "light rain shower":
+        case "patch rain nearby":
+        case "rainy":
+        case "showers":
+            suggestion = "Expect rain. Wear waterproof outerwear and bring an umbrella.";
+            imageUrls = [
+                "image/rainy1.jpg",
+                "image/rainy2.jpg",
+                "image/rainy3.jpg"
+            ];
+            break;
+        case "snow":
+            suggestion = "Snowy weather! Bundle up with a warm coat, scarf, and gloves.";
+            imageUrls = [
+                "image/snow1.jpg",
+                "image/snow2.jpg",
+                "image/snow3.jpg"
+            ];
+            break;
+        case "cloudy":
+        case "partly cloudy":
+            suggestion = "It's cloudy. A light sweater or hoodie should keep you comfortable.";
+            imageUrls = [
+                "image/cloudy1.jpg",
+                "image/cloudy2.jpg",
+                "image/cloudy3.jpg"
+            ];
+            break;
+        case "windy":
+            suggestion = "Windy conditions today. A windbreaker or jacket is recommended.";
+            imageUrls = [
+                "image/windy1.jpg",
+                "image/windy2.jpg",
+                "image/windy3.jpg"
+            ];
+            break;
+        default:
+            suggestion = "Dress comfortably and check for unexpected weather changes!";
+            imageUrls = [
+                "image/default1.jpg",
+                "image/default2.jpg",
+                "image/default3.jpg"
+            ];
+            break;
+    }
+
+    document.getElementById("outfit-suggestion").textContent = suggestion;
+    document.getElementById("outfit-image1").src = imageUrls[0];
+    document.getElementById("outfit-image2").src = imageUrls[1];
+    document.getElementById("outfit-image3").src = imageUrls[2];
+}
+    </script>
+</body>
+</html>

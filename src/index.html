@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Insider - Destinations</title>
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+            background-color: #f4f4f4;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: #0c2313;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 16px;
+            padding: 8px 16px; /* Add padding for consistency */
+            transition: background 0.3s; /* Smooth background transition */
+        }
+
+        .navbar a:hover {
+            background-color: #1a3d27; /* Darker background on hover */
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* Dropdown Button */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropbtn {
+            background-color: transparent; /* Make background transparent */
+            color: white;
+            border: none; /* Remove border */
+            padding: 8px 16px; /* Add padding for consistency */
+            font-size: 16px;
+            cursor: pointer; /* Change cursor on hover */
+            transition: background 0.3s; /* Smooth background transition */
+        }
+
+        .dropbtn:hover {
+            background-color: #1a3d27; /* Darker background on hover */
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Hero Section */
+        .hero {
+            background-image: url('image/italy.avif'); /* Replace with actual image */
+            background-size: cover;
+            background-position: center;
+            height: 400px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 20px;
+        }
+
+        /* Content Section */
+        .content {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .content h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: #0c2313;
+            text-align: center;
+        }
+
+        /* Destination Cards */
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .card {
+            position: relative;
+            width: 50%; /* Two cards per row */
+            height: 300px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.50s ease;
+        }
+
+        .card:hover img {
+            transform: scale(1.1); /* Zoom in by 10% on hover */
+        }
+
+        .card .overlay {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 20px;
+            color: white;
+            text-align: center;
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+        .card .overlay a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        .card .overlay a:hover {
+            color: #ddd; /* Change color on hover if desired */
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #0c2313;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        .footer p {
+            font-size: 14px;
+            color: #ddd;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .card {
+                width: 100%; /* Full width on smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo">TRAVCITY</div>
+        <div>
+            <a href="index.html">Home</a>
+            <div class="dropdown">
+                <button class="dropbtn">Country</button>
+                <div class="dropdown-content">
+                    <a href="korea.html">Korea</a>
+                    <a href="netherlands.html">Netherlands</a>
+                    <a href="italy.html">Italy</a>
+                    <a href="france.html">France</a>
+                    <a href="brazil.html">Brazil</a>
+                    <a href="china.html">China</a>
+                </div>
+            </div>
+            <a href="outfits.html">Outfits</a>
+            <a href="itineraries.html">Itineraries</a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <div>
+            <h1>Explore the World</h1>
+            <p>Your guide to the most amazing destinations</p>
+        </div>
+    </div>
+
+    <!-- Content Section -->
+    <div class="content">
+        <h2>Popular Destinations</h2>
+        <div class="card-container">
+            <!-- Card 1 -->
+            <div class="card">
+                <img src="image/netherlands.webp" alt="Netherlands">
+                <div class="overlay">
+                    <a href="netherlands.html">Netherlands</a>
+                </div>
+            </div>
+            <!-- Card 2 -->
+            <div class="card">
+                <img src="image/china.png" alt="China">
+                <div class="overlay">
+                    <a href="china.html">China</a>
+                </div>
+            </div>
+        </div>
+        <div class="card-container">
+            <!-- Card 3 -->
+            <div class="card">
+                <img src="image/brazil.png" alt="Brazil">
+                <div class="overlay">
+                    <a href="brazil.html">Brazil</a>
+                </div>
+            </div>
+            <!-- Card 4 -->
+            <div class="card">
+                <img src="image/italy1.jpg" alt="Italy">
+                <div class="overlay">
+                    <a href="italy.html">Italy</a>
+                </div>
+            </div>
+        </div>
+        <div class="card-container">
+            <!-- Card 5 -->
+            <div class="card">
+                <img src="image/korea.webp" alt="Korea">
+                <div class="overlay">
+                    <a href="korea.html">Korea</a>
+                </div>
+            </div>
+            <!-- Card 6 -->
+            <div class="card">
+                <img src="image/france.jpg" alt="France">
+                <div class="overlay">
+                    <a href="france.html">France</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2024 Travcity. All rights reserved.</p>
+    </div>
+
+</body>
+</html>
